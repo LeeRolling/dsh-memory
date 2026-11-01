@@ -72,6 +72,7 @@ _OP_TABLE = {
         "impl": "inline",
         "require": "write",
         "params": (
+            "aliases",
             "content",
             "content_kind",
             "depends_on",
@@ -1020,6 +1021,10 @@ _OP_TABLE = {
 
 # 无 op 归属的通用参数（每次调用都可能传的旋钮；由守卫对账 schema.properties）
 _GENERIC_PARAMS = (
+        # issue #722 反馈（yunluo4444 实测）：`cg(op=write, aliases=...)` 曾静默丢弃——
+        # 读侧 `_like` 早已把 aliases 并进召回串，但工具 schema 未登记 ⇒ 模型看不见该参数。
+        # 与 `tags` 同属通用参数（write 的 params 只列"必需"面，全量靠本表）。
+        "aliases",
         "ccg",
         "check_strength",
         "condition_space",
